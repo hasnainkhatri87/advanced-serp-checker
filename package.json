@@ -1,8 +1,8 @@
 ﻿{
   "name": "advanced-serp-checker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
-  "description": "Production-ready Google SERP checker with accurate top-100 rankings, history, comparison, analysis, and exports.",
+  "description": "Open-source Google SERP checker and SEO keyword rank tracker with accurate top-100 rankings, competitor analysis, history, and exports.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -15,10 +15,28 @@
   },
   "keywords": [
     "seo",
+    "seo-tool",
+    "seo-rank-checker",
     "serp",
+    "serp-checker",
+    "serp-analysis",
+    "serp-api",
     "rank-checker",
+    "google-rank-checker",
+    "keyword-rank-tracker",
     "serper",
-    "google-search"
+    "serper-api",
+    "google-search",
+    "google-serp"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasnainkhatri87/advanced-serp-checker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hasnainkhatri87/advanced-serp-checker/issues"
+  },
+  "homepage": "https://github.com/hasnainkhatri87/advanced-serp-checker#readme",
   "license": "MIT"
 }
+

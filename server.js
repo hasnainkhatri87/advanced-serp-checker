@@ -21,7 +21,8 @@ const mimeTypes = {
   ".ico": "image/x-icon",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml"
+  ".svg": "image/svg+xml",
+  ".txt": "text/plain; charset=utf-8"
 };
 
 const securityHeaders = {
@@ -425,4 +426,5 @@ module.exports = {
   resolvePosition,
   server
 };
+
 

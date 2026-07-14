@@ -1,54 +1,84 @@
-﻿# Advanced SERP Checker
+﻿# Google SERP Checker and SEO Rank Tracker
 
-A production-ready Google rank checker powered by Serper.dev. It fetches and analyzes up to 100 organic results, preserves real page-based positions, compares matching searches, tracks a target domain, and exports clean reports.
+[![CI](https://github.com/hasnainkhatri87/advanced-serp-checker/actions/workflows/ci.yml/badge.svg)](https://github.com/hasnainkhatri87/advanced-serp-checker/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/github/license/hasnainkhatri87/advanced-serp-checker)](LICENSE)
+[![Node.js 18+](https://img.shields.io/badge/Node.js-18%2B-339933)](https://nodejs.org/)
+[![Serper.dev](https://img.shields.io/badge/Powered%20by-Serper.dev-155eef)](https://serper.dev/)
 
-## Highlights
+**Advanced SERP Checker** is an open-source Google SERP checker, SEO rank checker, and keyword rank tracker powered by Serper.dev. Check accurate top-100 organic rankings by country, language, device, and location, then compare movement, analyze competitors and SERP features, and export reports to CSV or JSON.
 
-- Accurate organic positions across Google pages 1 through 10
-- Top 10, 20, 50, or 100 result checks
-- Country, language, device, location, date, and autocorrect controls
+It is built for SEO specialists, agencies, developers, content teams, and site owners who need a fast self-hosted alternative to subscription rank tracking tools.
+
+## Features
+
+- Accurate Google organic positions across pages 1 through 10
+- Top 10, 20, 50, or 100 keyword ranking checks
+- Country, language, location, desktop, mobile, and tablet targeting
 - Target URL and domain rank tracking
-- Movement comparison against the previous matching search
+- Ranking movement against the previous matching search
+- Competitor and domain visibility analysis
+- Google SERP feature detection
 - Search history stored locally in the browser
-- Organic coverage, domain visibility, ads, and SERP feature analysis
-- Search, domain, type, and sort filters
-- CSV and JSON exports
-- Shareable search URLs that never include the API key
-- Server-side API key proxy, validation, timeout, retry, security headers, and rate limiting
+- Filters for title, URL, snippet, domain, and result type
+- CSV and JSON SEO report exports
+- Shareable search URLs that never expose the API key
+- Server-side Serper API proxy with validation, retries, timeouts, rate limiting, and security headers
+- Docker and Render deployment support
 - Zero runtime dependencies
 
-## How top-100 ranking works
+## SEO use cases
 
-Serper returns one Google result page per request. A 100-result lookup therefore makes up to 10 Serper requests and can use up to 10 credits.
+### Keyword rank checking
 
-The server converts a provider position into an absolute rank using the Google page and slot. If the provider already returns an absolute rank, it is preserved. Duplicate canonical URLs are removed without compressing later ranks, so a real gap can remain in the sequence.
+Track where a page or domain appears in the first 100 Google organic results for a target keyword. Use country, language, device, and city-level location settings to reproduce the market you care about.
 
-Google or Serper can return fewer unique organic URLs than requested. The interface reports this honestly as coverage, such as 86 / 100, instead of inventing rows.
+### Competitor SERP analysis
+
+See which domains own the most results, their best positions, and which competitors repeatedly appear for the same query.
+
+### Ranking movement monitoring
+
+Run the same search again to compare each URL with its previous matching report. New, improved, unchanged, and declined rankings are identified automatically.
+
+### SERP feature research
+
+Detect answer boxes, AI overviews, knowledge graphs, People Also Ask, images, videos, local packs, shopping results, related searches, and top stories returned by Serper.
+
+## How top-100 rankings work
+
+Serper returns one Google result page per request. A 100-result lookup makes up to 10 requests and can use up to 10 Serper credits. The server fetches pages with bounded concurrency for faster reports.
+
+Provider positions are converted into absolute Google ranks using the result page and slot. Positions that are already absolute are preserved. Duplicate canonical URLs are removed without compressing later rankings, so the report does not invent a better position.
+
+Google or Serper may return fewer unique organic URLs than requested. The dashboard reports honest coverage, such as 86 / 100, instead of generating fake rows.
 
 ## Quick start
 
-Requirements: Node.js 18 or newer and a Serper.dev API key.
+Requirements: Node.js 18 or newer and a [Serper.dev API key](https://serper.dev/api-key).
 
-1. Clone the repository.
-2. Copy .env.example to .env.
-3. Set your key in .env:
+1. Clone the repository:
+
+    git clone https://github.com/hasnainkhatri87/advanced-serp-checker.git
+    cd advanced-serp-checker
+
+2. Copy .env.example to .env and set your API key:
 
     SERPER_API_KEY=your_real_key
 
-4. Start the app:
+3. Start the SEO rank checker:
 
     npm start
 
-5. Open http://127.0.0.1:5173
+4. Open http://127.0.0.1:5173
 
-For local testing, you can paste a key in the API connection section. Enable Remember on this device only on a trusted computer.
+For local testing, you can paste a key into the API connection section. Enable Remember on this device only on a trusted computer.
 
 ## Commands
 
     npm start        # Start the production server
     npm run dev      # Start with Node watch mode
     npm run check    # Check JavaScript syntax
-    npm test         # Run the automated test suite
+    npm test         # Run the automated ranking tests
 
 ## Configuration
 
@@ -62,26 +92,9 @@ For local testing, you can paste a key in the API connection section. Enable Rem
 
 Never commit .env or a real API key. The included .gitignore excludes .env.
 
-## Docker
+## API example
 
-Build and run:
-
-    docker build -t advanced-serp-checker .
-    docker run --rm -p 5173:5173 -e SERPER_API_KEY=your_real_key advanced-serp-checker
-
-The container includes a health check at /api/health.
-
-## Deployment
-
-The app works on any Node.js host that can run a persistent HTTP server. Set SERPER_API_KEY in the host's secret or environment settings.
-
-A render.yaml file is included for a Render deployment. Docker-based services such as Railway, Fly.io, and cloud container platforms can use the included Dockerfile.
-
-Do not deploy a public instance with an unrestricted high-value API key. Keep the built-in rate limit enabled and add platform-level authentication or rate limiting for larger deployments.
-
-## API
-
-POST /api/search accepts JSON:
+POST /api/search with JSON:
 
     {
       "q": "best running shoes",
@@ -94,32 +107,41 @@ POST /api/search accepts JSON:
       "autocorrect": true
     }
 
-When SERPER_API_KEY is not configured, local clients may send X-Serper-Key. Search responses include the merged data, fetched pages, estimated credits used, request ID, and organic coverage.
+When SERPER_API_KEY is not configured, local clients may send X-Serper-Key. Responses include merged results, fetched Google pages, estimated credits, request ID, and organic coverage.
 
-GET /api/health returns service status without exposing the key.
+GET /api/health returns service status without exposing the API key.
 
-## Publish to GitHub
+## Docker deployment
 
-After creating an empty GitHub repository:
+    docker build -t advanced-serp-checker .
+    docker run --rm -p 5173:5173 -e SERPER_API_KEY=your_real_key advanced-serp-checker
 
-    git init
-    git add .
-    git commit -m "Initial release"
-    git branch -M main
-    git remote add origin https://github.com/YOUR_USERNAME/advanced-serp-checker.git
-    git push -u origin main
+The container includes a health check at /api/health. A render.yaml file is included for one-click configuration on Render. Other Node.js and container platforms can run the same server.
 
-The included GitHub Actions workflow runs syntax checks and tests on Node.js 20 and 22.
+Do not expose a high-value Serper key without authentication and platform-level rate limiting. Use HTTPS in production.
 
-## Privacy
+## Technology
 
-Search history and an optionally remembered browser key are stored in localStorage. History, exports, and share links do not contain the API key. Live queries are sent to this app's server and then to Serper.dev.
+- Node.js HTTP server
+- Vanilla JavaScript
+- Responsive HTML and CSS
+- Serper.dev Google Search API
+- Node.js native test runner
+- GitHub Actions
+- Docker
+
+## Privacy and security
+
+Search history and an optionally remembered browser key are stored in localStorage. History, exports, and share links never contain the API key. Live searches are sent to this app's server proxy and then to Serper.dev.
+
+Read [SECURITY.md](SECURITY.md) before deploying publicly. Report vulnerabilities through GitHub Security Advisories, not public issues.
 
 ## Contributing
 
-Read CONTRIBUTING.md before opening a pull request. Security issues should follow SECURITY.md and should not be posted publicly.
+Contributions for SEO analysis, keyword tracking, SERP features, rank accuracy, providers, and interface improvements are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), run the tests, and open a focused pull request.
+
+If this Google SERP checker helps your SEO workflow, star the repository so other developers can find it.
 
 ## License
 
-MIT. See LICENSE.
-
+Released under the [MIT License](LICENSE).

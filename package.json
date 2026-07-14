@@ -1,0 +1,24 @@
+﻿{
+  "name": "advanced-serp-checker",
+  "version": "2.0.0",
+  "private": false,
+  "description": "Production-ready Google SERP checker with accurate top-100 rankings, history, comparison, analysis, and exports.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check public/app.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "seo",
+    "serp",
+    "rank-checker",
+    "serper",
+    "google-search"
+  ],
+  "license": "MIT"
+}
